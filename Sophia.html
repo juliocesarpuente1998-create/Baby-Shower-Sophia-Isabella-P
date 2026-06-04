@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baby Shower · Sophía Isabella</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose:  #f2a7b8;
+      --blush: #fde8ee;
+      --cream: #fdf6f0;
+      --mauve: #c98ea0;
+      --deep:  #7a4a58;
+      --text:  #4a3038;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* PETALS */
+    .petal-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .petal { position: absolute; width: 18px; height: 18px; border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%; opacity: 0; animation: fall linear infinite; }
+    @keyframes fall {
+      0%   { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+      10%  { opacity: .55; }
+      90%  { opacity: .3; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+      background: linear-gradient(160deg, #fce4ec 0%, #fdf0f5 40%, var(--cream) 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(242,167,184,.25) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(201,142,160,.18) 0%, transparent 70%);
+    }
+    .hero-ring {
+      position: relative; width: min(280px,72vw); height: min(280px,72vw);
+      border-radius: 50%; border: 2px solid rgba(242,167,184,.5);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 2.5rem; animation: pulse 4s ease-in-out infinite;
+    }
+    .hero-ring::before { content: ''; position: absolute; inset: 10px; border-radius: 50%; border: 1px dashed rgba(201,142,160,.4); }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(242,167,184,.3); }
+      50%      { box-shadow: 0 0 0 18px rgba(242,167,184,.0); }
+    }
+    .hero-emoji { font-size: clamp(5rem,18vw,8rem); line-height: 1; }
+    .subtitle { font-family: 'Jost',sans-serif; font-weight: 200; font-size: clamp(.75rem,2.5vw,.95rem); letter-spacing: .4em; text-transform: uppercase; color: var(--mauve); margin-bottom: .8rem; opacity: 0; animation: fadeUp .8s .2s forwards; }
+    .hero-name { font-family: 'Cormorant Garamond',serif; font-weight: 300; font-size: clamp(2.8rem,10vw,5.5rem); line-height: 1.05; color: var(--deep); opacity: 0; animation: fadeUp .9s .45s forwards; }
+    .hero-name em { font-style: italic; color: var(--mauve); }
+    .hero-tagline { margin-top: 1.2rem; font-weight: 200; font-size: clamp(.85rem,2.5vw,1rem); letter-spacing: .15em; color: var(--mauve); opacity: 0; animation: fadeUp .9s .7s forwards; }
+    .scroll-hint { position: absolute; bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: .4rem; opacity: 0; animation: fadeUp .8s 1.4s forwards; }
+    .scroll-hint span { font-size: .7rem; letter-spacing: .25em; color: var(--mauve); text-transform: uppercase; }
+    .scroll-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--rose), transparent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SECTIONS */
+    section { position: relative; z-index: 1; padding: clamp(3rem,8vw,5rem) clamp(1.5rem,6vw,4rem); max-width: 860px; margin: 0 auto; }
+    .section-label { font-size: .7rem; letter-spacing: .45em; text-transform: uppercase; color: var(--rose); margin-bottom: .6rem; display: block; }
+    .section-title { font-family: 'Cormorant Garamond',serif; font-size: clamp(1.9rem,5vw,2.8rem); font-weight: 300; color: var(--deep); line-height: 1.15; margin-bottom: 2rem; }
+    .section-title em { font-style: italic; color: var(--mauve); }
+    .divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--rose), transparent); margin: 0 auto 2.5rem; }
+
+    /* EVENT */
+    .event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 1.5rem; }
+    .event-card { background: white; border: 1px solid rgba(242,167,184,.3); border-radius: 20px; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 4px 30px rgba(201,142,160,.08); transition: transform .3s, box-shadow .3s; }
+    .event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(201,142,160,.15); }
+    .event-icon { font-size: 2rem; margin-bottom: .8rem; display: block; }
+    .event-card-label { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--rose); margin-bottom: .4rem; display: block; }
+    .event-card-value { font-family: 'Cormorant Garamond',serif; font-size: 1.35rem; font-weight: 400; color: var(--deep); line-height: 1.3; }
+
+    /* PARENTS */
+    .parents-wrap { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+    .parent-card { flex: 1; min-width: 200px; max-width: 280px; background: linear-gradient(135deg,#fff5f8,#fff); border: 1px solid rgba(242,167,184,.35); border-radius: 24px; padding: 2.5rem 2rem; text-align: center; box-shadow: 0 4px 30px rgba(201,142,160,.08); }
+    .parent-icon { font-size: 2.5rem; margin-bottom: .8rem; display: block; }
+    .parent-role { font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--rose); margin-bottom: .5rem; display: block; }
+    .parent-name { font-family: 'Cormorant Garamond',serif; font-size: 1.5rem; font-weight: 400; color: var(--deep); }
+
+    /* BANKING */
+    .bank-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .bank-card { background: white; border: 1px solid rgba(242,167,184,.3); border-radius: 20px; padding: 1.8rem 2rem; box-shadow: 0 4px 30px rgba(201,142,160,.07); }
+    .bank-name { font-family: 'Cormorant Garamond',serif; font-size: 1.4rem; font-weight: 600; color: var(--deep); margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem; }
+    .bank-name::before { content: '🏦'; font-size: 1.1rem; }
+    .bank-row { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: baseline; margin-bottom: .45rem; font-size: .9rem; }
+    .bank-row:last-child { margin-bottom: 0; }
+    .bank-key { font-size: .62rem; letter-spacing: .25em; text-transform: uppercase; color: var(--rose); white-space: nowrap; }
+    .bank-val { color: var(--text); font-weight: 300; word-break: break-all; }
+    .btn-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; padding: .85rem 2rem; background: linear-gradient(135deg,var(--rose),var(--mauve)); color: white; border-radius: 50px; text-decoration: none; font-size: .85rem; letter-spacing: .12em; font-weight: 300; box-shadow: 0 6px 20px rgba(201,142,160,.35); transition: transform .25s, box-shadow .25s; }
+    .btn-link:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,142,160,.45); }
+
+    /* COPY BTN */
+    .copy-btn { cursor: pointer; background: none; border: none; padding: 0; color: var(--rose); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; display: inline-flex; align-items: center; gap: .3rem; transition: color .2s; }
+    .copy-btn:hover { color: var(--mauve); }
+    .copy-btn svg { width: 13px; height: 13px; }
+
+    /* RSVP */
+    .rsvp-box { background: white; border: 1px solid rgba(242,167,184,.35); border-radius: 24px; padding: 2.5rem 2rem; box-shadow: 0 4px 30px rgba(201,142,160,.08); text-align: center; max-width: 480px; margin: 0 auto; }
+    .rsvp-input { width: 100%; border: 1.5px solid rgba(242,167,184,.5); border-radius: 50px; padding: .9rem 1.4rem; font-family: 'Jost',sans-serif; font-size: .95rem; font-weight: 300; color: var(--text); background: #fff8fa; outline: none; transition: border-color .25s, box-shadow .25s; margin-bottom: 1rem; }
+    .rsvp-input:focus { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(242,167,184,.15); }
+    .rsvp-input::placeholder { color: #c9aab2; }
+    .rsvp-btn { width: 100%; padding: .9rem 2rem; background: linear-gradient(135deg,var(--rose),var(--mauve)); color: white; border: none; border-radius: 50px; font-family: 'Jost',sans-serif; font-size: .88rem; letter-spacing: .15em; font-weight: 300; cursor: pointer; box-shadow: 0 6px 20px rgba(201,142,160,.35); transition: transform .25s, box-shadow .25s; }
+    .rsvp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,142,160,.45); }
+    .rsvp-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .rsvp-msg { margin-top: 1rem; font-size: .88rem; font-weight: 300; color: var(--mauve); min-height: 1.4rem; }
+    .rsvp-list-wrap { margin-top: 2.5rem; }
+    .rsvp-list-title { font-family: 'Cormorant Garamond',serif; font-size: 1.2rem; color: var(--deep); margin-bottom: 1rem; text-align: center; }
+    .rsvp-list { list-style: none; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+    .rsvp-list li { background: linear-gradient(135deg,#fde8ee,#fff5f8); border: 1px solid rgba(242,167,184,.4); border-radius: 50px; padding: .4rem 1.1rem; font-size: .85rem; font-weight: 300; color: var(--deep); }
+    .rsvp-empty { font-size: .85rem; color: #c9aab2; text-align: center; font-style: italic; }
+    .rsvp-count { font-size: .8rem; color: var(--mauve); letter-spacing: .1em; margin-bottom: 1rem; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 3rem 1.5rem 4rem; font-size: .8rem; font-weight: 200; letter-spacing: .18em; color: var(--mauve); border-top: 1px solid rgba(242,167,184,.2); }
+    footer strong { display: block; margin-bottom: .4rem; font-family: 'Cormorant Garamond',serif; font-size: 1.4rem; font-weight: 300; color: var(--deep); letter-spacing: .05em; }
+
+    @media (max-width: 520px) { .bank-card { padding: 1.4rem 1.2rem; } .rsvp-box { padding: 1.8rem 1.2rem; } }
+  </style>
+</head>
+<body>
+
+<div class="petal-bg" id="petals"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ring"><span class="hero-emoji">🌸</span></div>
+  <span class="subtitle">Baby Shower</span>
+  <h1 class="hero-name">Sophia<br><em>Isabella</em></h1>
+  <p class="hero-tagline">Puente Solorzano · 2026</p>
+  <div class="scroll-hint">
+    <span>Desliza</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</div>
+
+<!-- EVENTO -->
+<section id="evento">
+  <span class="section-label">El gran día</span>
+  <h2 class="section-title">Mi <em>Baby Shower</em></h2>
+  <div class="divider"></div>
+  <div class="event-grid">
+    <div class="event-card">
+      <span class="event-icon">📅</span>
+      <span class="event-card-label">Fecha</span>
+      <p class="event-card-value">Sábado 13 de Junio</p>
+    </div>
+    <div class="event-card">
+      <span class="event-icon">🕐</span>
+      <span class="event-card-label">Hora</span>
+      <p class="event-card-value">4:00 PM</p>
+    </div>
+    <div class="event-card" style="cursor:pointer;" onclick="window.open('https://maps.app.goo.gl/bsqqDr8MJmg9M1iw5','_blank')">
+      <span class="event-icon">📍</span>
+      <span class="event-card-label">Lugar</span>
+      <p class="event-card-value">Av. Real Audiencia N53-118 y Humberto Marín</p>
+      <p style="font-size:.7rem;letter-spacing:.15em;color:var(--rose);margin-top:.6rem;text-transform:uppercase;">Ver en el mapa →</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAPÁS -->
+<section id="padres" style="background:linear-gradient(to bottom,var(--cream),#fde8ee22);border-radius:32px;">
+  <span class="section-label">Con todo el amor</span>
+  <h2 class="section-title">Mis <em>Papás</em></h2>
+  <div class="divider"></div>
+  <div class="parents-wrap">
+    <div class="parent-card">
+      <span class="parent-icon">👨‍👧</span>
+      <span class="parent-role">Papá</span>
+      <p class="parent-name">Julio Puente</p>
+    </div>
+    <div class="parent-card">
+      <span class="parent-icon">👩‍👧</span>
+      <span class="parent-role">Mamá</span>
+      <p class="parent-name">Karla Solorzano</p>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section id="asistencia">
+  <span class="section-label">¡Te esperamos!</span>
+  <h2 class="section-title">Confirma tu <em>Asistencia</em></h2>
+  <div class="divider"></div>
+  <div class="rsvp-box">
+    <p style="font-size:.9rem;font-weight:200;color:var(--text);margin-bottom:1.8rem;">
+      ¡Queremos saber que estarás ahí! Confirma tu asistencia haciendo clic en el botón 🎀
+    </p>
+    <a class="btn-link" href="https://forms.gle/h4drTADfstYxNYLNA" target="_blank" rel="noopener" style="display:inline-flex;margin:0 auto;">
+      🌸 &nbsp;Confirmar mi asistencia
+    </a>
+  </div>
+</section>
+
+<!-- DATOS BANCARIOS -->
+<section id="regalos">
+  <span class="section-label">Tu regalo con amor</span>
+  <h2 class="section-title">Datos <em>Bancarios</em></h2>
+  <div class="divider"></div>
+  <div class="bank-list">
+
+    <div class="bank-card">
+      <p class="bank-name">Banco Pichincha</p>
+      <div class="bank-row"><span class="bank-key">Titular</span><span class="bank-val">Karla Solorzano</span></div>
+      <div class="bank-row"><span class="bank-key">Tipo</span><span class="bank-val">Cuenta de Ahorro Transaccional</span></div>
+      <div class="bank-row">
+        <span class="bank-key">Número</span><span class="bank-val">2207627360</span>
+        <button class="copy-btn" onclick="copyText('2207627360',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar
+        </button>
+      </div>
+      <div class="bank-row"><span class="bank-key">CI</span><span class="bank-val">1750669945</span></div>
+    </div>
+
+    <div class="bank-card">
+      <p class="bank-name">Banco Guayaquil</p>
+      <div class="bank-row"><span class="bank-key">Titular</span><span class="bank-val">Solorzano Solorzano Karla Tatiana</span></div>
+      <div class="bank-row"><span class="bank-key">Tipo</span><span class="bank-val">Ahorro</span></div>
+      <div class="bank-row">
+        <span class="bank-key">Número</span><span class="bank-val">0051438609</span>
+        <button class="copy-btn" onclick="copyText('0051438609',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar
+        </button>
+      </div>
+      <div class="bank-row"><span class="bank-key">Email</span><span class="bank-val">SOLORZANOTATIANA422@GMAIL.COM</span></div>
+      <div class="bank-row"><span class="bank-key">CI</span><span class="bank-val">1750669945</span></div>
+      <div class="bank-row"><span class="bank-key">SWIFT</span><span class="bank-val">GUAYECEG</span></div>
+    </div>
+
+    <div class="bank-card" style="text-align:center;">
+      <p class="bank-name" style="justify-content:center;">💳 &nbsp;Tarjeta de Crédito / Débito</p>
+      <p style="font-size:.9rem;font-weight:200;color:var(--text);margin-bottom:1.2rem;">También puedes hacer tu aporte con tarjeta de forma segura:</p>
+      <a class="btn-link" href="https://ppls.me/TTrAWM3CJokVoreIwJtg" target="_blank" rel="noopener">💝 &nbsp;Enviar regalo con tarjeta</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <strong>Sophía Isabella 🌸</strong>
+  Hecha con amor · Puente Solorzano · 2026
+</footer>
+
+<script>
+  /* PETALS */
+  const container = document.getElementById('petals');
+  const colors = ['#f2a7b8','#fbc8d4','#e8a0b4','#f7c5d3','#d4a0b5','#fad4de'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*-20}%;background:${colors[Math.floor(Math.random()*colors.length)]};width:${10+Math.random()*14}px;height:${10+Math.random()*14}px;animation-duration:${6+Math.random()*10}s;animation-delay:${Math.random()*8}s;transform:rotate(${Math.random()*360}deg);border-radius:${['60% 40% 60% 40% / 40% 60% 40% 60%','50%','70% 30% 50% 50% / 30% 50% 70% 50%'][Math.floor(Math.random()*3)]};`;
+    container.appendChild(p);
+  }
+
+  /* COPY */
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copiado';
+      btn.style.color = '#c98ea0';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    });
+  }
+
+
+
+  /* SCROLL FADE */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section,.event-card,.parent-card,.bank-card,.rsvp-box').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
